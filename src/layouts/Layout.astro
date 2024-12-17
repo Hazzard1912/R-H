@@ -1,3 +1,14 @@
+---
+import SearchBar from "../components/SearchBar.astro";
+
+interface Props {
+	title: string;
+	meta?: string;
+}
+
+const { title, meta } = Astro.props;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,11 +16,35 @@
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<meta
+			name="keywords"
+			content=`RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, cartoons, cartoon erotica, video game art, hentai games, fantasy, adventure, slice of life, shoujo, shounen, visual novels, fan art, cosplay, supernatural, action, romance, gaming, popular culture, pop culture, series, movies, comics, fanfiction ${meta}`
+		/>
+		<title>{title}</title>
 	</head>
 	<body>
+		<SearchBar />
 		<slot />
 	</body>
+	<footer class="footer mt-8">
+		<div class="footer-content">
+			<div class="footer-column">
+				<p>
+					Somos Rincon Hentai, la mejor página al servicio de la
+					amplia comunidad amante del hentai.
+				</p>
+			</div>
+			<div class="footer-column">
+				<p>© {new Date().getFullYear()} Rincon Hentai</p>
+				<p>Las imágenes han sido tomadas de Rule34</p>
+				<p>
+					Para sugerencias, contáctanos en <a
+						href="rinconhentai@proton.me">rinconhentai@proton.me</a
+					>
+				</p>
+			</div>
+		</div>
+	</footer>
 </html>
 
 <style>
@@ -18,5 +53,43 @@
 		margin: 0;
 		width: 100%;
 		height: 100%;
+		background-color: #070707;
+		color: #fff;
+	}
+
+	.footer {
+		background-color: #181818;
+		padding: 20px;
+	}
+
+	.footer-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+	}
+
+	.footer-column {
+		margin: 10px 0;
+	}
+
+	@media (min-width: 600px) {
+		.footer-content {
+			flex-direction: row;
+			justify-content: space-between;
+		}
+
+		.footer-column {
+			margin: 0 20px;
+		}
+	}
+
+	a {
+		color: #cd2c1b;
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: underline;
 	}
 </style>

@@ -1,0 +1,70 @@
+---
+import Gallery from "../../../components/Gallery.astro";
+import Layout from "../../../layouts/Layout.astro";
+import type { ImageListResponse } from "../../../interfaces/image.response";
+
+export const prerender = false;
+
+const { tag, pid } = Astro.params;
+
+const tagFormatted = tag?.replace(/-/g, "_");
+
+let currentPage = Number(pid) || 1;
+
+const apiUrl = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&tags=${tagFormatted}&pid=${currentPage}&limit=50&json=1`;
+
+let images: ImageListResponse[] = [];
+
+try {
+    const response = await fetch(apiUrl);
+    if (response.ok) {
+        images = await response.json();
+    }
+} catch (error) {
+    console.error("Error fetching images:", error);
+}
+---
+
+<Layout title={`Resultados para: ${tag}`} meta=`${tag}`>
+    <Gallery images={images} />
+    <div class="pagination">
+        {
+            currentPage > 1 && (
+                <a
+                    href={`
+                        /tags/${tag}/${currentPage === 2 ? "1" : currentPage - 1}
+			`}
+                    class="btn"
+                >
+                    Anterior
+                </a>
+            )
+        }
+        <a href= {`/tags/${tag}/${currentPage + 1}`}
+         class="btn"> Siguiente </a>
+    </div>
+</Layout>
+
+<style>
+	.pagination {
+		display: flex;
+		justify-content: center;
+		margin-top: 1rem;
+	}
+
+	.btn {
+		padding: 0.75rem 1.5rem;
+		margin: 0 0.5rem;
+		background-color: #630000;
+		color: white;
+		border-radius: 0.5rem;
+		text-decoration: none;
+		transition: background-color 0.3s, transform 0.3s;
+	}
+	.btn:hover {
+		background-color: #181818;
+	}
+	.btn:active {
+		transform: scale(0.95);
+	}
+</style>

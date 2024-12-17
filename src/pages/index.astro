@@ -1,11 +1,48 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Inicio">
+	<div class="age-warning">
+		<h1>Advertencia de Edad</h1>
+		<p>
+			Este sitio contiene contenido para adultos. Debes tener al menos 18
+			años para acceder.
+		</p>
+		<button id="confirm-age">Soy mayor de edad</button>
+		<button id="exit-site">Salir</button>
+	</div>
 </Layout>
+
+<script>
+	function handleAgeConfirmation() {
+		window.location.href = "/inicio/1";
+	}
+
+	function handleExit() {
+		window.location.href = "https://www.google.com";
+	}
+
+	document.addEventListener("DOMContentLoaded", () => {
+		const confirmButton = document.getElementById("confirm-age");
+		const exitButton = document.getElementById("exit-site");
+
+		if (confirmButton) {
+			confirmButton.addEventListener("click", handleAgeConfirmation);
+		}
+
+		if (exitButton) {
+			exitButton.addEventListener("click", handleExit);
+		}
+	});
+</script>
+
+<style>
+	.age-warning {
+		text-align: center;
+		margin-top: 50px;
+	}
+	.age-warning button {
+		margin: 10px;
+	}
+</style>
