@@ -4,6 +4,8 @@ import type { ImageListResponse } from "../../interfaces/image.response";
 import Gallery from "../../components/Gallery.astro";
 import Layout from "../../layouts/Layout.astro";
 
+export const prerender = true;
+
 export const getStaticPaths = (() => {
 	const pages = Array.from({ length: 100 }, (_, i) => i + 1);
 	return pages.map((pid) => ({
