@@ -18,9 +18,6 @@ let images: ImageListResponse[] = [];
 try {
     const response = await fetch(apiUrl, {
         cache: "no-cache",
-        headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-        },
     });
     if (response.ok) {
         images = await response.json();
