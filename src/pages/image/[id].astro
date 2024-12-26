@@ -59,88 +59,88 @@ try {
 const tags = image?.tags ? image.tags.split(" ") : [];
 ---
 
-<Layout title="Imagen" id=`${id}`>
-    <div class="container mx-auto mt-8 p-4">
-        {
-            image ? (
-                <div>
-                    <div class="flex flex-col gap-4">
-                        <div class="text-center mb-4">
-                            <h1 class="text-3xl font-bold">
-                                Autor:{" "}
-                                <span class="text-red-700">{image.owner}</span>
-                            </h1>
-                            <a
-                                href={image.file_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-blue-500 hover:text-blue-700 underline mt-2 inline-block"
-                            >
-                                Ver fuente
-                            </a>
-                        </div>
-                        <Image
-                            id="main-image"
-                            src={image.file_url}
-                            fetchpriority="high"
-                            format="webp"
-                            alt=""
-                            loading="eager"
-                            quality="low"
-                            class="mx-auto lightbox rounded-md"
-                            layout="responsive"
-                            width={image.width}
-                            height={image.height}
-                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
-                        <div class="flex flex-wrap gap-4 justify-start">
-                            <h2 class="text-2xl font-bold text-center mt-8 mb-4 w-full">
-                                Tags
-                            </h2>
-                            {tags?.map((tag) => (
-                                <a
-                                    href={`/tags/${tag}/1`}
-                                    class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 inline-block rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 will-change-transform"
-                                >
-                                    {tag}
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                    <h2 class="text-2xl font-bold text-center mt-8 mb-4">
-                        Imágenes Relacionadas
-                    </h2>
-                    {relatedImages ? (
-                        <Gallery images={relatedImages} />
-                    ) : (
-                        <p class="text-white text-center">
-                            No se encontraron imágenes relacionadas.
-                        </p>
-                    )}
-                </div>
-            ) : (
-                <div class="flex items-center justify-center min-h-screen">
-                    <div class="text-center">
-                        <p class="text-white text-2xl mb-4">
-                            No se encontró la imagen solicitada.
-                        </p>
-                        <img
-                            src="https://i.waifu.pics/k2r~YJ0.gif"
-                            alt="No images found"
-                            class="mx-auto mb-4 my-4 rounded-md"
-                        />
+{
+    image ? (
+        <Layout title="Imagen" id={id} image={image} meta={image?.tags}>
+            <div class="container mx-auto mt-8 p-4">
+                <div class="flex flex-col gap-4">
+                    <div class="text-center mb-4">
+                        <h1 class="text-3xl font-bold">
+                            Autor:{" "}
+                            <span class="text-red-700">{image.owner}</span>
+                        </h1>
                         <a
-                            href="/inicio/1"
-                            class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 inline-block rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
+                            href={image.file_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="text-blue-500 hover:text-blue-700 underline mt-2 inline-block"
                         >
-                            Ir a Inicio
+                            Ver fuente
                         </a>
                     </div>
+                    <Image
+                        id="main-image"
+                        src={image.file_url}
+                        fetchpriority="high"
+                        format="webp"
+                        alt=""
+                        loading="eager"
+                        quality="low"
+                        class="mx-auto lightbox rounded-md"
+                        layout="responsive"
+                        width={image.width}
+                        height={image.height}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div class="flex flex-wrap gap-4 justify-start">
+                        <h2 class="text-2xl font-bold text-center mt-8 mb-4 w-full">
+                            Tags
+                        </h2>
+                        {tags?.map((tag) => (
+                            <a
+                                href={`/tags/${tag}/1`}
+                                class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 inline-block rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 will-change-transform"
+                            >
+                                {tag}
+                            </a>
+                        ))}
+                    </div>
                 </div>
-            )
-        }
-    </div></Layout
->
+                <h2 class="text-2xl font-bold text-center mt-8 mb-4">
+                    Imágenes Relacionadas
+                </h2>
+                {relatedImages ? (
+                    <Gallery images={relatedImages} />
+                ) : (
+                    <p class="text-white text-center">
+                        No se encontraron imágenes relacionadas.
+                    </p>
+                )}
+            </div>
+        </Layout>
+    ) : (
+        <Layout title="Imagen no encontrada" meta="No encontrada">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="text-center">
+                    <p class="text-white text-2xl mb-4">
+                        No se encontró la imagen solicitada.
+                    </p>
+                    <img
+                        src="https://i.waifu.pics/k2r~YJ0.gif"
+                        alt="No images found"
+                        class="mx-auto mb-4 my-4 rounded-md"
+                    />
+                    <a
+                        href="/inicio/1"
+                        class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 inline-block rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
+                    >
+                        Ir a Inicio
+                    </a>
+                </div>
+            </div>
+        </Layout>
+    )
+}
 
 <script>
     import Glightbox from "glightbox";

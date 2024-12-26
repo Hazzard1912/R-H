@@ -1,13 +1,16 @@
 ---
 import SearchBar from "../components/SearchBar.astro";
 import Analytics from "@vercel/analytics/astro";
+import type { ImageData } from "../interfaces/imageData.response";
 
 interface Props {
 	title: string;
 	id?: string;
+	image?: ImageData;
+	meta?: string;
 }
 
-const { title, id } = Astro.props;
+const { title, id, image, meta } = Astro.props;
 ---
 
 <!doctype html>
@@ -19,8 +22,8 @@ const { title, id } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<meta
 			name="keywords"
-			content="RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, cartoons, cartoon erotica, video game art, hentai games, fantasy, adventure, slice of life, shoujo, shounen, visual novels, fan art, cosplay, supernatural, action, romance, gaming, popular culture, pop culture, series, movies, comics, fanfiction"
-		/>
+			content=`RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, cartoons, cartoon erotica, video game art, hentai games, fantasy, adventure, slice of life, shoujo, shounen, visual novels, fan art, cosplay, supernatural, action, romance, gaming, popular culture, pop culture, series, movies, comics, fanfiction
+			${meta}`/>
 		<meta
 			name="description"
 			content="'Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más."
@@ -33,7 +36,7 @@ const { title, id } = Astro.props;
 		/>
 		<meta
 			property="og:image"
-			content="https://rinconhentai.com/banner.png"
+			content={image?.preview_url || "https://rinconhentai.com/banner.png"}
 		/>
 		<meta property="og:url" content="https://rinconhentai.com" />
 		<meta property="og:type" content="website" />
