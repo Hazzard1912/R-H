@@ -18,11 +18,17 @@ const getImageDetails = async (id: string) => {
         },
     );
     if (response.ok) {
-        const data = await response.json();
-        return data[0] as ImageData;
+        try {
+            const data = await response.json();
+            return data[0] as ImageData;
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            return null;
+        }
     }
     return null;
 };
+
 const image = await getImageDetails(id as string);
 console.log(image);
 
@@ -50,7 +56,7 @@ try {
     console.error("Error fetching related images:", error);
 }
 
-const tags = image?.tags ? image.tags.split(" ").slice(0, 10) : [];
+const tags = image?.tags ? image.tags.split(" ") : [];
 ---
 
 <Layout title="RinconHentai" meta="RinconHentai">
@@ -87,11 +93,14 @@ const tags = image?.tags ? image.tags.split(" ").slice(0, 10) : [];
                             height={image.height}
                             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
-                        <div class="flex flex-wrap gap-4 justify-center">
+                        <div class="flex flex-wrap gap-4 justify-start">
+                            <h2 class="text-2xl font-bold text-center mt-8 mb-4 w-full">
+                                Tags
+                            </h2>
                             {tags?.map((tag) => (
                                 <a
                                     href={`/tags/${tag}/1`}
-                                    class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 inline-block rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
+                                    class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 inline-block rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1 will-change-transform"
                                 >
                                     {tag}
                                 </a>
