@@ -4,9 +4,10 @@ import Analytics from "@vercel/analytics/astro";
 
 interface Props {
 	title: string;
+	id?: string;
 }
 
-const { title } = Astro.props;
+const { title, id } = Astro.props;
 ---
 
 <!doctype html>
@@ -20,22 +21,34 @@ const { title } = Astro.props;
 			name="keywords"
 			content="RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, cartoons, cartoon erotica, video game art, hentai games, fantasy, adventure, slice of life, shoujo, shounen, visual novels, fan art, cosplay, supernatural, action, romance, gaming, popular culture, pop culture, series, movies, comics, fanfiction"
 		/>
-		<meta name="description" content="'Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más.">
+		<meta
+			name="description"
+			content="'Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más."
+		/>
 		<Analytics />
 		<meta property="og:title" content={`${title} - RinconHentai`} />
-		<meta property="og:description" content="Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más." />
-		<meta property="og:image" content="https://rinconhentai.com/banner.png" />
+		<meta
+			property="og:description"
+			content="Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más."
+		/>
+		<meta
+			property="og:image"
+			content="https://rinconhentai.com/banner.png"
+		/>
 		<meta property="og:url" content="https://rinconhentai.com" />
 		<meta property="og:type" content="website" />
 		<meta property="og:site_name" content="RinconHentai" />
 		<meta name="twitter:card" content="summary_large_image" />
-		<title>{title} - RinconHentai: Tu Portal de Anime y Hentai</title>
+		<title>
+			{title}
+			{id ? `${id}` : ""}
+			- RinconHentai: Tu Portal de Anime y Hentai
+		</title>
 	</head>
 	<body>
 		<SearchBar />
 		<slot />
-	</body>
-	<footer class="footer mt-8">
+	</body><footer class="footer mt-8">
 		<div class="footer-content">
 			<div class="footer-column">
 				<p>
