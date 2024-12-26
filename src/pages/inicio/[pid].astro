@@ -36,31 +36,36 @@ try {
 ---
 
 <Layout title={`Página ${currentPage}`}>
-	<Gallery images={images} />
-	<div class="pagination">
-		{
-			currentPage > 1 && (
-				<a
-					href={`
-				${currentPage === 2 ? "/inicio/1" : `/inicio/${currentPage - 1}`}
-			`}
-					class="btn"
-				>
-					Anterior
-				</a>
-			)
-		}
-		{
-			currentPage < 100 && (
-				<a
-					href={`/inicio/${currentPage + 1}`}
-					class="btn"
-					rel="prefetch"
-				>
-					Siguiente
-				</a>
-			)
-		}
+	<div class="container mx-auto mt-8 p-4">
+		<Gallery images={images} />
+		<div class="pagination">
+			{
+				currentPage > 1 && (
+					<a
+						href={`
+					${currentPage === 2 ? "/inicio/1" : `/inicio/${currentPage - 1}`}
+				`}
+						class="btn"
+					>
+						Anterior
+					</a>
+				)
+			}
+			<span class="mx-4 text-white text-xl">
+				{currentPage}
+			</span>
+			{
+				currentPage < 100 && (
+					<a
+						href={`/inicio/${currentPage + 1}`}
+						class="btn"
+						rel="prefetch"
+					>
+						Siguiente
+					</a>
+				)
+			}
+		</div>
 	</div>
 </Layout>
 

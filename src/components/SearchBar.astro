@@ -2,40 +2,99 @@
 
 ---
 
-<nav class="bg-gray-100 p-4 shadow-md flex justify-between items-center">
-    <form class="search-bar flex items-center">
-        <input
-            type="search"
-            id="tag"
-            placeholder="Buscar"
-            class="w-64 p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-red-500 text-black"
-        />
-        <button
-            type="submit"
-            class="p-2 bg-white text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 rounded-r-md"
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+<nav class="bg-gray-100 p-4 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+        <div class="flex items-center">
+            <!-- Search bar -->
+            <form class="search-bar flex items-center w-full md:w-64">
+                <input
+                    type="search"
+                    id="tag"
+                    placeholder="Buscar"
+                    class="w-full p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-red-500 text-black"
+                />
+                <button
+                    type="submit"
+                    class="p-2 bg-white text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 rounded-r-md"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM8 14a6 6 0 100-12 6 6 0 000 12z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </form>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex space-x-4">
+            <a
+                href="/inicio/1"
+                class="p-2 bg-white text-red-800 rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 px-4 py-2"
             >
-                <path
-                    fill-rule="evenodd"
-                    d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM8 14a6 6 0 100-12 6 6 0 000 12z"
-                    clip-rule="evenodd"></path>
-            </svg>
-        </button>
-    </form>
-    <a
-        href="/inicio/1"
-        class="p-2 bg-white text-red-800 rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 px-8 py-2"
+                Inicio
+            </a>
+            <!-- TODO: No hay forma de obtener la lista en xml -->
+            <!-- <a
+                href="/popular-tags"
+                class="p-2 bg-white text-red-800 rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 px-4 py-2"
+            >
+                Etiquetas Populares
+            </a> -->
+        </div>
+
+        <!-- Mobile Navigation (Hamburger Menu) -->
+        <div class="md:hidden">
+            <button
+                id="mobileMenuButton"
+                class="p-2 text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
+            >
+                <svg
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+        id="mobileMenu"
+        class="md:hidden bg-gray-100 border-t border-gray-200 shadow-md opacity-0 transition-opacity duration-300 ease-in-out"
     >
-        Inicio
-    </a>
+        <a
+            href="/inicio/1"
+            class="block px-4 py-2 text-red-800 hover:bg-red-100">Inicio</a
+        >
+        <!-- <a
+            href="/popular-tags"
+            class="block px-4 py-2 text-red-800 hover:bg-red-100"
+            >Etiquetas Populares</a
+        > -->
+    </div>
 </nav>
 
 <script>
+    const mobileMenuButton = document.getElementById("mobileMenuButton");
+    const mobileMenu = document.getElementById("mobileMenu");
+    mobileMenuButton?.addEventListener("click", () => {
+        mobileMenu?.classList.toggle("opacity-0");
+    });
+
     const form = document.querySelector(".search-bar");
     form?.addEventListener("submit", (e) => {
         e.preventDefault();

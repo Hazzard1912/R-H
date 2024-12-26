@@ -1,5 +1,14 @@
 ---
 import Image from "astro/components/Image.astro";
+
+const popularTags = [
+	{ tag: "long_hair" },
+	{ tag: "highres" },
+	{ tag: "underwear" },
+	{ tag: "swimsuit" },
+	{ tag: "skirt" },
+	{ tag: "blush" },
+];
 ---
 
 <!doctype html>
@@ -29,14 +38,16 @@ import Image from "astro/components/Image.astro";
 				alt="Banner"
 				class="mx-auto mb-4 p-2"
 			/>
-			<div class="w-full max-w-xl mx-auto mb-2 p-2 rounded-lg shadow-md">
-				<form class="search-bar mb-4 flex">
+			<div
+				class="w-full max-w-xl mx-auto mb-4 p-4 rounded-lg shadow-md bg-gray-800 text-white"
+			>
+				<form class="search-bar mb-6 flex">
 					<input
 						type="text"
 						id="tag"
 						name="search"
 						placeholder="Anime, personaje, etc."
-						class="appearance-none border rounded-l px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+						class="appearance-none border border-gray-600 rounded-l px-4 py-2 text-gray-200 bg-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
 					/>
 					<button
 						type="submit"
@@ -45,39 +56,32 @@ import Image from "astro/components/Image.astro";
 						Buscar
 					</button>
 				</form>
-				<!-- <div class="flex flex-wrap gap-2">
-					<a
-						href="#"
-						class="tag mb-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full"
-						>Tag 1</a
-					>
-					<a
-						href="#"
-						class="tag mb-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full"
-						>Tag 2</a
-					>
-					<a
-						href="#"
-						class="tag mb-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full"
-						>Tag 3</a
-					>
-					<a
-						href="#"
-						class="tag mb-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full"
-						>Tag 4</a
-					>
-				</div> -->
+				<h2 class="text-2xl font-bold text-center mb-4">
+					Etiquetas Populares
+				</h2>
+				<div class="flex flex-wrap gap-2 justify-center">
+					{
+						popularTags.map(({ tag }) => (
+							<a
+								href={`/tags/${tag}/1`}
+								class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded"
+							>
+								{tag}
+							</a>
+						))
+					}
+				</div>
 			</div>
 			<a
 				href="/inicio/1"
-				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+				class="block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center mx-auto mt-4 max-w-48"
 			>
 				Ir a Inicio
 			</a>
 		</div>
 		<footer class="footer p-8">
 			<h2 class="text-2xl font-bold text-center">Advertencia de Edad</h2>
-			<p class="text-base text-gray-600 mb-4">
+			<p class="text-sm text-gray-600 mb-4">
 				Este sitio es solo para propósitos de entretenimiento y no está
 				destinado a menores de edad. Al usar este sitio, aceptas
 				nuestros
@@ -123,7 +127,7 @@ import Image from "astro/components/Image.astro";
 			}
 
 			#preview-image {
-				height: 500px;
+				height: 380px;
 				width: auto;
 				margin-top: 30px;
 				border-radius: 10px;
@@ -134,6 +138,13 @@ import Image from "astro/components/Image.astro";
 			p {
 				max-width: 500px;
 				margin: 1rem auto;
+			}
+
+			@media (max-width: 600px) {
+				.age-warning img {
+					width: 80%;
+				}
+
 			}
 		</style>
 	</body>

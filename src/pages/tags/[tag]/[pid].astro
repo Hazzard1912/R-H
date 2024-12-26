@@ -27,24 +27,58 @@ try {
 }
 ---
 
-<Layout title={`Resultados para: ${tag}`} meta=`${tag}`>
-    <Gallery images={images} />
-    <div class="pagination">
+<Layout title={`Resultados para: ${tag}`} meta={`${tag}`}>
+    <div class="container mx-auto mt-8 p-4">
+        <h1 class="text-3xl font-bold text-white">
+            Resultados para:{" "}
+            <span class="text-red-700">{tag}</span>
+        </h1>
         {
-            currentPage > 1 && (
-                <a
-                    href={`
-                        /tags/${tag}/${currentPage === 2 ? "1" : currentPage - 1}
-			`}
-                    class="btn"
-                >
-                    Anterior
-                </a>
+            images.length > 0 ? (
+                <>
+                    <Gallery images={images} />
+                    <div class="pagination flex justify-center mt-6">
+                        {currentPage > 1 && (
+                            <a
+                                href={`/tags/${tag}/${currentPage === 2 ? "1" : currentPage - 1}`}
+                                class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
+                            >
+                                Anterior
+                            </a>
+                        )}
+                        <span class="mx-4 text-white text-xl">
+                            {currentPage}
+                        </span>
+                        <a
+                            href={`/tags/${tag}/${currentPage + 1}`}
+                            class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
+                            rel="prefetch"
+                        >
+                            Siguiente
+                        </a>
+                    </div>
+                </>
+            ) : (
+                <div class="flex items-center justify-center min-h-screen">
+                    <div class="text-center">
+                        <p class="text-white text-2xl mb-4">
+                            No se encontraron imágenes para esta etiqueta.
+                        </p>
+                        <img
+                            src="https://i.waifu.pics/k2r~YJ0.gif"
+                            alt="No images found"
+                            class="mx-auto mb-4 my-4 rounded-md"
+                        />
+                        <a
+                            href="/inicio/1"
+                            class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 inline-block rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
+                        >
+                            Ir a Inicio
+                        </a>
+                    </div>
+                </div>
             )
         }
-        <a href={`/tags/${tag}/${currentPage + 1}`} class="btn" rel="prefetch">
-            Siguiente
-        </a>
     </div>
 </Layout>
 
@@ -64,12 +98,16 @@ try {
         text-decoration: none;
         transition:
             background-color 0.3s,
-            transform 0.3s;
+            transform 0.3s,
+            box-shadow 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .btn:hover {
         background-color: #181818;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
     }
     .btn:active {
         transform: scale(0.95);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 </style>
