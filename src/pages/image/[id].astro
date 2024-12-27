@@ -28,7 +28,7 @@ const getImageDetails = async (id: string) => {
             headers: {
                 Accept: "application/json",
             },
-            cache: "no-cache",
+            cache: "no-store",
             priority: "high",
         });
 
@@ -63,7 +63,7 @@ const getRelatedImages = async (tag: string) => {
             headers: {
                 Accept: "application/json",
             },
-            cache: "no-cache",
+            cache: "no-store",
             priority: "low",
         });
 
