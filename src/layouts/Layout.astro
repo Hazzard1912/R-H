@@ -16,6 +16,20 @@ const { title, id, image, meta } = Astro.props;
 <!doctype html>
 <html lang="en">
 	<head>
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			src="https://www.googletagmanager.com/gtag/js?id=G-KZXETM6CMV"
+		></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
+
+			gtag("config", "G-KZXETM6CMV");
+		</script>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -32,8 +46,7 @@ const { title, id, image, meta } = Astro.props;
 		/>
 		<meta
 			name="keywords"
-			content={`RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, cartoons, cartoon erotica, video game art, hentai games, fantasy, adventure, slice of life, shoujo, shounen, visual novels, fan art, cosplay, supernatural, action, romance, gaming, popular culture, pop culture, series, movies, comics, fanfiction
-			${meta}`}
+			content={`RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, fan art, cartoons, video game art, fantasy, adventure, slice of life, shoujo, shounen, visual novels, cosplay, supernatural, action, romance, gaming, popular culture, series, movies, comics, fanfiction, ecchi, 18+ art, ${meta}`}
 		/>
 		<meta name="robots" content="index, follow" />
 		<meta name="language" content="Spanish" />

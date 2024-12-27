@@ -12,18 +12,18 @@ const tagFormatted = tag?.replace(/-/g, "_");
 let currentPage = Number(pid) || 1;
 
 // Use environment variables for API configuration
-const API_BASE_URL = 'https://rule34.xxx/index.php';
+const API_BASE_URL = "https://rule34.xxx/index.php";
 const ITEMS_PER_PAGE = 50;
 
 // Construct API URL with URLSearchParams for better safety
 const params = new URLSearchParams({
-    page: 'dapi',
-    s: 'post',
-    q: 'index',
-    tags: tagFormatted || '',
+    page: "dapi",
+    s: "post",
+    q: "index",
+    tags: tagFormatted || "",
     pid: currentPage.toString(),
     limit: ITEMS_PER_PAGE.toString(),
-    json: '1'
+    json: "1",
 });
 
 let images: ImageListResponse[] = [];
@@ -31,36 +31,40 @@ let images: ImageListResponse[] = [];
 try {
     const response = await fetch(`${API_BASE_URL}?${params}`, {
         headers: {
-            'Accept': 'application/json',
+            Accept: "application/json",
         },
-        cache: 'no-cache',
-        priority: 'high',
+        cache: "no-cache",
+        priority: "high",
     });
 
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+
     images = await response.json();
 
     // Basic data validation
     if (!Array.isArray(images)) {
         images = [];
     }
-
 } catch (error) {
-    console.error('Failed to fetch images:', error);
+    console.error("Failed to fetch images:", error);
     images = [];
 }
 ---
 
-<Layout title={`Resultados para: ${tag}`} meta={`${tag}`} image={images[0]}>
+<Layout title={`${tag}`} meta={tag} image={images[0]}>
     <div class="container mx-auto mt-8 p-4">
         <h1
             class="text-3xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600"
         >
             Resultados para: <span class="from-red-500 to-pink-600">{tag}</span>
         </h1>
+        <p class="text-center text-gray-400 mb-8">
+            Explora nuestra galería de imágenes. Haz clic en cualquier imagen
+            para verla en tamaño completo, explorar sus etiquetas y descubrir
+            contenido relacionado.
+        </p>
         {
             images.length > 0 ? (
                 <>

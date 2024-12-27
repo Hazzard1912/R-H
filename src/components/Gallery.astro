@@ -22,26 +22,31 @@ const { images } = Astro.props;
                     data-gallery="my-gallery"
                     aria-label={`View image by ${image.owner}`}
                 >
-                    <div class="image-wrapper relative backdrop-blur-sm bg-gray-800/30 rounded-md overflow-hidden border border-gray-700/50">
-                        <div class="animate-pulse bg-gray-700/50 absolute inset-0" />
-                        <Image
-                            src={image.sample_url}
-                            alt={`Image by ${image.owner}`}
-                            format="webp"
-                            loading={
-                                Astro.url.pathname.includes("/tags")
-                                    ? "eager"
-                                    : "lazy"
-                            }
-                            quality="low"
-                            class="gallery-image opacity-0 transition-opacity duration-300"
-                            layout="responsive"
-                            width={image.width}
-                            height={image.height}
-                            sizes={`(min-width: 1024px) 250px, (min-width: 640px) 31vw, 44.5vw`}
-                            onload="this.classList.remove('opacity-0')"
-                        />
-                    </div>
+                    <figure class="h-full">
+                        <div class="image-wrapper relative backdrop-blur-sm bg-gray-800/30 rounded-md overflow-hidden border border-gray-700/50">
+                            <div class="animate-pulse bg-gray-700/50 absolute inset-0" />
+                            <Image
+                                src={image.sample_url}
+                                alt={`Arte de: ${image.tags}`}
+                                format="webp"
+                                loading={
+                                    Astro.url.pathname.includes("/tags")
+                                        ? "eager"
+                                        : "lazy"
+                                }
+                                quality="low"
+                                class="gallery-image opacity-0 transition-opacity duration-300"
+                                layout="responsive"
+                                width={image.width}
+                                height={image.height}
+                                sizes={`(min-width: 1024px) 250px, (min-width: 640px) 31vw, 44.5vw`}
+                                onload="this.classList.remove('opacity-0')"
+                            />
+                        </div>
+                        <figcaption class="mt-2 text-sm text-gray-400 truncate px-2">
+                            {image.tags || 'Sin descripción'}
+                        </figcaption>
+                    </figure>
                 </a>
             ))
         }
