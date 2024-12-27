@@ -37,6 +37,7 @@ const getImageDetails = async (id: string) => {
         }
 
         const data = await response.json();
+        console.log(data);
         return Array.isArray(data) && data.length > 0
             ? (data[0] as ImageData)
             : null;
@@ -128,8 +129,8 @@ const tags = image?.tags ? image.tags.split(" ") : [];
                                 fetchpriority="high"
                                 format="webp"
                                 loading="eager"
-                                quality={85}
-                                class="lightbox opacity-0 transition-opacity duration-300 rounded-xl shadow-2xl cursor-pointer will-change-transform"
+                                quality={100}
+                                class="lightbox opacity-0 transition-opacity duration-300 rounded-xl shadow-2xl cursor-pointer will-change-transform mx-auto"
                                 layout="responsive"
                                 width={image.width}
                                 height={image.height}
@@ -236,8 +237,14 @@ const tags = image?.tags ? image.tags.split(" ") : [];
     ) as HTMLButtonElement;
     shareButton.addEventListener("click", () => {
         if (navigator.share) {
-            const title = document.querySelector('meta[property="og:title"]')?.getAttribute("content") || document.title;
-            const text = document.querySelector('meta[property="og:description"]')?.getAttribute("content") || "";
+            const title =
+                document
+                    .querySelector('meta[property="og:title"]')
+                    ?.getAttribute("content") || document.title;
+            const text =
+                document
+                    .querySelector('meta[property="og:description"]')
+                    ?.getAttribute("content") || "";
 
             const shareData: ShareData = {
                 title,
@@ -245,10 +252,11 @@ const tags = image?.tags ? image.tags.split(" ") : [];
                 url: window.location.href,
             };
 
-            navigator.share(shareData)
-                .catch(err => console.error('Error sharing:', err));
+            navigator
+                .share(shareData)
+                .catch((err) => console.error("Error sharing:", err));
         } else {
-            console.log('Web Share API not supported');
+            console.log("Web Share API not supported");
         }
     });
 </script>
