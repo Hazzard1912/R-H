@@ -30,7 +30,7 @@ const { images } = Astro.props;
                                 alt={`Arte de: ${image.tags}`}
                                 format="webp"
                                 loading={
-                                    Astro.url.pathname.includes("/tags")
+                                    Astro.url.pathname.includes("/tags") || Astro.url.pathname.includes("/inicio")
                                         ? "eager"
                                         : "lazy"
                                 }
