@@ -11,70 +11,171 @@ const tagFormatted = tag?.replace(/-/g, "_");
 
 let currentPage = Number(pid) || 1;
 
-const apiUrl = `https://rule34.xxx/index.php?page=dapi&s=post&q=index&tags=${tagFormatted}&pid=${currentPage}&limit=50&json=1`;
+// Use environment variables for API configuration
+const API_BASE_URL = 'https://rule34.xxx/index.php';
+const ITEMS_PER_PAGE = 50;
+
+// Construct API URL with URLSearchParams for better safety
+const params = new URLSearchParams({
+    page: 'dapi',
+    s: 'post',
+    q: 'index',
+    tags: tagFormatted || '',
+    pid: currentPage.toString(),
+    limit: ITEMS_PER_PAGE.toString(),
+    json: '1'
+});
 
 let images: ImageListResponse[] = [];
 
 try {
-    const response = await fetch(apiUrl, {
-        cache: "no-cache",
+    const response = await fetch(`${API_BASE_URL}?${params}`, {
+        headers: {
+            'Accept': 'application/json',
+        },
+        cache: 'no-cache',
+        priority: 'high',
     });
-    if (response.ok) {
-        images = await response.json();
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
+    
+    images = await response.json();
+
+    // Basic data validation
+    if (!Array.isArray(images)) {
+        images = [];
+    }
+
 } catch (error) {
-    console.error("Error fetching images:", error);
+    console.error('Failed to fetch images:', error);
+    images = [];
 }
 ---
 
-<Layout title={`Resultados para: ${tag}`} meta={`${tag}`}>
+<Layout title={`Resultados para: ${tag}`} meta={`${tag}`} image={images[0]}>
     <div class="container mx-auto mt-8 p-4">
-        <h1 class="text-3xl font-bold text-white">
-            Resultados para:{" "}
-            <span class="text-red-700">{tag}</span>
+        <h1
+            class="text-3xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600"
+        >
+            Resultados para: <span class="from-red-500 to-pink-600">{tag}</span>
         </h1>
         {
             images.length > 0 ? (
                 <>
                     <Gallery images={images} />
-                    <div class="pagination flex justify-center mt-6">
-                        {currentPage > 1 && (
-                            <a
-                                href={`/tags/${tag}/${currentPage === 2 ? "1" : currentPage - 1}`}
-                                class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
-                            >
-                                Anterior
-                            </a>
-                        )}
-                        <span class="mx-4 text-white text-xl">
-                            {currentPage}
-                        </span>
-                        <a
-                            href={`/tags/${tag}/${currentPage + 1}`}
-                            class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
-                            rel="prefetch"
+                    <div class="flex justify-center mt-8">
+                        <nav
+                            class="isolate inline-flex -space-x-px rounded-md shadow-sm"
+                            aria-label="Pagination"
                         >
-                            Siguiente
-                        </a>
+                            {currentPage > 1 && (
+                                <a
+                                    href={`/tags/${tag}/${currentPage - 1}`}
+                                    class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-700 hover:bg-gray-800 focus:z-20 focus:outline-offset-0"
+                                >
+                                    <span class="sr-only">Anterior</span>
+                                    <svg
+                                        class="h-5 w-5"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </a>
+                            )}
+
+                            {/* First Page */}
+                            <a
+                                href={`/tags/${tag}/1`}
+                                class={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === 1 ? "bg-gray-700 text-white" : "text-gray-400"} ring-1 ring-inset ring-gray-700 hover:bg-gray-800 focus:z-20 focus:outline-offset-0`}
+                            >
+                                1
+                            </a>
+
+                            {currentPage > 3 && (
+                                <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-700">
+                                    ...
+                                </span>
+                            )}
+
+                            {currentPage > 2 && (
+                                <a
+                                    href={`/tags/${tag}/${currentPage - 1}`}
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-700 hover:bg-gray-800 focus:z-20 focus:outline-offset-0"
+                                >
+                                    {currentPage - 1}
+                                </a>
+                            )}
+
+                            {currentPage > 1 && (
+                                <a
+                                    href={`/tags/${tag}/${currentPage}`}
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-semibold bg-gray-700 text-white ring-1 ring-inset ring-gray-700 focus:z-20 focus:outline-offset-0"
+                                >
+                                    {currentPage}
+                                </a>
+                            )}
+
+                            <a
+                                href={`/tags/${tag}/${currentPage + 1}`}
+                                class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-700 hover:bg-gray-800 focus:z-20 focus:outline-offset-0"
+                            >
+                                {currentPage + 1}
+                            </a>
+
+                            <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-400 ring-1 ring-inset ring-gray-700">
+                                ...
+                            </span>
+
+                            <a
+                                href={`/tags/${tag}/${currentPage + 1}`}
+                                class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-700 hover:bg-gray-800 focus:z-20 focus:outline-offset-0"
+                            >
+                                <span class="sr-only">Siguiente</span>
+                                <svg
+                                    class="h-5 w-5"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </a>
+                        </nav>
                     </div>
                 </>
             ) : (
-                <div class="flex items-center justify-center min-h-screen">
-                    <div class="text-center">
-                        <p class="text-white text-2xl mb-4">
-                            No se encontraron imágenes para esta etiqueta.
+                <div class="flex items-center justify-center min-h-[60vh]">
+                    <div class="w-full max-w-2xl mx-auto p-8 rounded-xl bg-gray-900/60 backdrop-blur-sm border border-gray-800 shadow-2xl">
+                        <p class="text-3xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">
+                            No se encontraron imágenes
                         </p>
                         <img
                             src="https://i.waifu.pics/k2r~YJ0.gif"
                             alt="No images found"
-                            class="mx-auto mb-4 my-4 rounded-md"
+                            class="mx-auto mb-8 rounded-xl shadow-2xl border border-gray-800/50"
+                            width="300"
+                            height="200"
                         />
-                        <a
-                            href="/inicio/1"
-                            class="btn bg-red-700 hover:bg-gray-800 text-white px-4 py-2 inline-block rounded-md transition-all duration-300 ease-in-out transform hover:-translate-y-1"
-                        >
-                            Ir a Inicio
-                        </a>
+                        <div class="flex justify-center">
+                            <a
+                                href="/inicio/1"
+                                class="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-full transform hover:scale-105 transition-all duration-300 shadow-lg will-change-transform"
+                            >
+                                Volver al Inicio
+                            </a>
+                        </div>
                     </div>
                 </div>
             )
@@ -83,31 +184,7 @@ try {
 </Layout>
 
 <style>
-    .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-    }
-
-    .btn {
-        padding: 0.75rem 1.5rem;
-        margin: 0 0.5rem;
-        background-color: #630000;
-        color: white;
-        border-radius: 0.5rem;
-        text-decoration: none;
-        transition:
-            background-color 0.3s,
-            transform 0.3s,
-            box-shadow 0.3s;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .btn:hover {
-        background-color: #181818;
-        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-    }
-    .btn:active {
-        transform: scale(0.95);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    .pagination-btn {
+        @apply text-white font-bold py-2 px-6 rounded-lg transform hover:scale-105 transition-all duration-300 shadow-lg will-change-transform;
     }
 </style>

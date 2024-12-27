@@ -1,5 +1,6 @@
 ---
 import Image from "astro/components/Image.astro";
+import Layout from "../layouts/Layout.astro";
 
 const popularTags = [
 	{ tag: "long_hair" },
@@ -8,152 +9,121 @@ const popularTags = [
 	{ tag: "swimsuit" },
 	{ tag: "skirt" },
 	{ tag: "blush" },
+	{ tag: "smile" },
+	{ tag: "open_mouth" },
+	{ tag: "tongue" },
+	{ tag: "breasts" },
+	{ tag: "cleavage" },
+	{ tag: "panties" },
+	{ tag: "cuckold" },
+	{ tag: "netorare" },
+	{ tag: "stockings" },
+	{ tag: "thighhighs" },
+	{ tag: "pussy" },
+	{ tag: "pussy_juice" },
+	{ tag: "cum" },
 ];
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<meta
-			name="keywords"
-			content="RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, cartoons, cartoon erotica, video game art, hentai games, fantasy, adventure, slice of life, shoujo, shounen, visual novels, fan art, cosplay, supernatural, action, romance, gaming, popular culture, pop culture, series, movies, comics, fanfiction"
+<Layout title="Inicio">
+	<h1
+		class="text-4xl font-extrabold text-center mt-8 mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600"
+	>
+		¡Bienvenido a RinconHentai!
+	</h1>
+	<div class="age-warning">
+		<Image
+			quality="high"
+			id="preview-image"
+			src="/banner.png"
+			width={500}
+			height={500}
+			alt="Banner"
+			class="mx-auto mb-4 p-2"
 		/>
-		<meta name="description" content="Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más">
-		<meta property="og:title" content="RinconHentai: Tu Portal de Anime y Hentai" />
-		<meta property="og:description" content="Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más." />
-		<meta property="og:image" content="https://rinconhentai.com/banner.png" />
-		<meta property="og:url" content="https://rinconhentai.com" />
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="RinconHentai" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<title>RinconHentai: Tu Portal de Anime y Hentai</title>
-	</head>
-	<body>
-		<h1 class="text-4xl font-bold text-center mt-8">
-			¡Bienvenido a RinconHentai!
-		</h1>
-		<div class="age-warning">
-			<Image
-				quality="high"
-				id="preview-image"
-				src="/banner.png"
-				width={500}
-				height={500}
-				alt="Banner"
-				class="mx-auto mb-4 p-2"
-			/>
-			<div
-				class="w-full max-w-xl mx-auto mb-4 p-4 rounded-lg shadow-md bg-gray-800 text-white"
+		<div
+			class="w-full max-w-2xl mx-auto mb-8 p-6 rounded-xl bg-gray-900/60 backdrop-blur-sm border border-gray-800 shadow-2xl"
+		>
+			<h2
+				class="text-3xl font-extrabold text-center mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600"
 			>
-				<form class="search-bar mb-6 flex">
-					<input
-						type="text"
-						id="tag"
-						name="search"
-						placeholder="Anime, personaje, etc."
-						class="appearance-none border border-gray-600 rounded-l px-4 py-2 text-gray-200 bg-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
-					/>
-					<button
-						type="submit"
-						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-r"
-					>
-						Buscar
-					</button>
-				</form>
-				<h2 class="text-2xl font-bold text-center mb-4">
-					Etiquetas Populares
-				</h2>
-				<div class="flex flex-wrap gap-2 justify-center">
-					{
-						popularTags.map(({ tag }) => (
-							<a
-								href={`/tags/${tag}/1`}
-								class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded"
-							>
-								{tag}
-							</a>
-						))
-					}
-				</div>
-			</div>
-			<a
-				href="/inicio/1"
-				class="block bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-center mx-auto mt-4 max-w-48"
-			>
-				Ir a Inicio
-			</a>
-		</div>
-		<footer class="footer p-8">
-			<h2 class="text-2xl font-bold text-center">Advertencia de Edad</h2>
-			<p class="text-sm text-gray-600 mb-4">
-				Este sitio es solo para propósitos de entretenimiento y no está
-				destinado a menores de edad. Al usar este sitio, aceptas
-				nuestros
-				<a
-					href="/terminos-de-uso
-					"
-					class="text-blue-500 hover:text-blue-700 underline"
-					>términos de uso</a
-				>.
-			</p>
-		</footer>
-
-		<script>
-			const form = document.querySelector(".search-bar");
-			form?.addEventListener("submit", (e) => {
-				e.preventDefault();
-				const input = (
-					document.getElementById("tag") as HTMLInputElement
-				).value;
-				const tag = input.trim().replace(/\s/g, "-");
-				window.location.href = `/tags/${tag}/1`;
-			});
-		</script>
-
-		<style>
-			html,
-			body {
-				margin: 0;
-				width: 100%;
-				height: 100%;
-				background-color: #070707;
-				color: #fff;
-			}
-			.age-warning {
-				text-align: center;
-			}
-			.age-warning img {
-				width: 50%;
-				height: auto;
-				margin-top: 30px;
-				border-radius: 10px;
-				box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-			}
-
-			#preview-image {
-				height: 380px;
-				width: auto;
-				margin-top: 30px;
-				border-radius: 10px;
-				box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-				object-fit: cover;
-			}
-
-			p {
-				max-width: 500px;
-				margin: 1rem auto;
-			}
-
-			@media (max-width: 600px) {
-				.age-warning img {
-					width: 80%;
+				Etiquetas Populares
+			</h2>
+			<div class="flex flex-wrap gap-3 justify-center">
+				{
+					popularTags.map(({ tag }) => (
+						<a
+							href={`/tags/${tag}/1`}
+							class="bg-gray-800/80 text-gray-100 hover:bg-gradient-to-r hover:from-red-500 hover:to-purple-600 transition-all duration-300 font-medium py-2 px-4 rounded-lg text-sm transform hover:scale-105 will-change-transform"
+						>
+							#{tag}
+						</a>
+					))
 				}
+			</div>
+		</div>
+		<a
+			href="/inicio/1"
+			class="block bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-bold py-3 px-8 rounded-full text-center mx-auto mt-8 max-w-xs transform hover:scale-105 transition-all duration-300 shadow-lg will-change-transform"
+		>
+			Ingresar
+		</a>
+	</div>
+	<div class="footer p-12 bg-gray-900/40 backdrop-blur-sm mt-16">
+		<h2
+			class="text-2xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600 mb-4"
+		>
+			Advertencia de Edad
+		</h2>
+		<p class="text-gray-300 text-center max-w-2xl mx-auto">
+			Este sitio es solo para propósitos de entretenimiento y no está
+			destinado a menores de edad. Al usar este sitio, aceptas nuestros
+			<a
+				href="/terminos-de-uso"
+				class="text-pink-400 hover:text-pink-300 underline transition-colors duration-300"
+				>términos de uso</a
+			>.
+		</p>
+	</div>
+</Layout>
 
-			}
-		</style>
-	</body>
-</html>
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #070707;
+		color: #fff;
+	}
+	.age-warning {
+		text-align: center;
+	}
+	.age-warning img {
+		width: 50%;
+		height: auto;
+		margin-top: 30px;
+		border-radius: 10px;
+		box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+	}
+
+	#preview-image {
+		height: 380px;
+		width: auto;
+		margin-top: 30px;
+		border-radius: 10px;
+		box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+		object-fit: cover;
+	}
+
+	p {
+		max-width: 500px;
+		margin: 1rem auto;
+	}
+
+	@media (max-width: 600px) {
+		.age-warning img {
+			width: 80%;
+		}
+	}
+</style>

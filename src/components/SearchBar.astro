@@ -2,97 +2,90 @@
 
 ---
 
-<nav class="bg-gray-100 p-4 shadow-md">
-    <div class="container mx-auto flex justify-between items-center">
-        <div class="flex items-center">
-            <!-- Search bar -->
-            <form class="search-bar flex items-center w-full md:w-64">
-                <input
-                    type="search"
-                    id="tag"
-                    placeholder="Buscar"
-                    class="w-full p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-red-500 text-black"
-                />
+<nav class="bg-gray-900/60 backdrop-blur-sm border-b border-gray-800">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex h-16 items-center justify-between">
+            <div class="flex-1 md:flex md:items-center">
+                <form class="search-bar flex">
+                    <div class="relative w-full md:w-96">
+                        <input
+                            type="search"
+                            id="tag"
+                            class="w-full rounded-lg border border-gray-700 bg-gray-800/50 py-2 pl-4 pr-10 text-gray-100 placeholder:text-gray-400 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-300"
+                            placeholder="Buscar etiquetas..."
+                        />
+                        <button
+                            type="submit"
+                            class="absolute right-1 top-1/2 -translate-y-1/2 rounded-md p-2 text-gray-400 hover:text-purple-400 transition-colors duration-300"
+                        >
+                            <svg
+                                class="h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM8 14a6 6 0 100-12 6 6 0 000 12z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:block">
+                <a
+                    href="/inicio/1"
+                    class="bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white font-medium px-6 py-2 rounded-lg transition-all duration-300 transform hover:scale-105 will-change-transform"
+                >
+                    Inicio
+                </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
                 <button
-                    type="submit"
-                    class="p-2 bg-white text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 rounded-r-md"
+                    id="mobileMenuButton"
+                    class="rounded-lg p-2 text-gray-300 hover:text-purple-400 hover:bg-gray-800/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
                 >
                     <svg
-                        xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                     >
                         <path
-                            fill-rule="evenodd"
-                            d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM8 14a6 6 0 100-12 6 6 0 000 12z"
-                            clip-rule="evenodd"></path>
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
                     </svg>
                 </button>
-            </form>
-        </div>
-
-        <!-- Desktop Navigation -->
-        <div class="hidden md:flex space-x-4">
-            <a
-                href="/inicio/1"
-                class="p-2 bg-white text-red-800 rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 px-4 py-2"
-            >
-                Inicio
-            </a>
-            <!-- TODO: No hay forma de obtener la lista en xml -->
-            <!-- <a
-                href="/popular-tags"
-                class="p-2 bg-white text-red-800 rounded-md hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 px-4 py-2"
-            >
-                Etiquetas Populares
-            </a> -->
-        </div>
-
-        <!-- Mobile Navigation (Hamburger Menu) -->
-        <div class="md:hidden">
-            <button
-                id="mobileMenuButton"
-                class="p-2 text-red-800 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-500 rounded"
-            >
-                <svg
-                    class="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
+            </div>
         </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div
-        id="mobileMenu"
-        class="md:hidden bg-gray-100 border-t border-gray-200 shadow-md opacity-0 transition-opacity duration-300 ease-in-out"
-    >
-        <a
-            href="/inicio/1"
-            class="block px-4 py-2 text-red-800 hover:bg-red-100">Inicio</a
-        >
-        <!-- <a
-            href="/popular-tags"
-            class="block px-4 py-2 text-red-800 hover:bg-red-100"
-            >Etiquetas Populares</a
-        > -->
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden">
+        <div class="space-y-1 px-4 pb-4 pt-2 backdrop-blur-sm">
+            <a
+                href="/inicio/1"
+                class="block rounded-lg px-4 py-2 text-gray-300 hover:bg-gradient-to-r hover:from-red-500 hover:to-pink-600 hover:text-white transition-all duration-300"
+            >
+                Inicio
+            </a>
+        </div>
     </div>
 </nav>
 
 <script>
     const mobileMenuButton = document.getElementById("mobileMenuButton");
     const mobileMenu = document.getElementById("mobileMenu");
+
     mobileMenuButton?.addEventListener("click", () => {
-        mobileMenu?.classList.toggle("opacity-0");
+        mobileMenu?.classList.toggle("hidden");
     });
 
     const form = document.querySelector(".search-bar");
@@ -104,14 +97,3 @@
         window.location.href = `/tags/${tag}/1`;
     });
 </script>
-
-<style>
-    nav {
-        width: 100%;
-        height: 5rem;
-        top: 0;
-        z-index: 1000;
-        background: linear-gradient(90deg, #630000 0%, #ff6f61 100%);
-        color: white;
-    }
-</style>

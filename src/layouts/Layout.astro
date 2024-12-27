@@ -17,55 +17,106 @@ const { title, id, image, meta } = Astro.props;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<meta
-			name="keywords"
-			content=`RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, cartoons, cartoon erotica, video game art, hentai games, fantasy, adventure, slice of life, shoujo, shounen, visual novels, fan art, cosplay, supernatural, action, romance, gaming, popular culture, pop culture, series, movies, comics, fanfiction
-			${meta}`/>
+
+		<!-- Primary Meta Tags -->
+		<title>
+			{title}{id ? ` ${id}` : ""} - RinconHentai: Tu Portal de Anime y Hentai
+		</title>
+		<meta name="title" content={`${title} - RinconHentai`} />
 		<meta
 			name="description"
-			content="'Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más."
-		/>
-		<Analytics />
-		<meta property="og:title" content={`${title} - RinconHentai`} />
-		<meta
-			property="og:description"
 			content="Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más."
 		/>
 		<meta
-			property="og:image"
-			content={image?.preview_url || "https://rinconhentai.com/banner.png"}
+			name="keywords"
+			content={`RinconHentai, imageboard, anime, manga, doujinshi, hentai, erotic art, adult content, japanese art, anime art, cartoons, cartoon erotica, video game art, hentai games, fantasy, adventure, slice of life, shoujo, shounen, visual novels, fan art, cosplay, supernatural, action, romance, gaming, popular culture, pop culture, series, movies, comics, fanfiction
+			${meta}`}
 		/>
-		<meta property="og:url" content="https://rinconhentai.com" />
+		<meta name="robots" content="index, follow" />
+		<meta name="language" content="Spanish" />
+		<meta name="author" content="RinconHentai" />
+
+		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website" />
+		<meta
+			property="og:url"
+			content={`https://rinconhentai.com${Astro.url.pathname}`}
+		/>
+		<meta property="og:title" content={`${title} - RinconHentai`} />
+		<meta
+			property="og:description"
+			content="Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más"
+		/>
+		<meta
+			property="og:image"
+			content={image?.preview_url ||
+				"https://rinconhentai.com/banner.png"}
+		/>
 		<meta property="og:site_name" content="RinconHentai" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<title>
-			{title}
-			{id ? `${id}` : ""}
-			- RinconHentai: Tu Portal de Anime y Hentai
-		</title>
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta
+			property="twitter:url"
+			content={`https://rinconhentai.com${Astro.url.pathname}`}
+		/>
+		<meta property="twitter:title" content={`${title} - RinconHentai`} />
+		<meta
+			property="twitter:description"
+			content="Descubre y disfruta del mejor contenido de anime y hentai en RinconHentai. Explora imágenes, doujinshi, y más"
+		/>
+		<meta
+			property="twitter:image"
+			content={image?.preview_url ||
+				"https://rinconhentai.com/banner.png"}
+		/>
+
+		<Analytics />
 	</head>
 	<body>
 		<SearchBar />
 		<slot />
-	</body><footer class="footer mt-8">
-		<div class="footer-content">
-			<div class="footer-column">
-				<p>
-					Somos Rincon Hentai, la mejor página al servicio de la
-					amplia comunidad amante del hentai.
-				</p>
-			</div>
-			<div class="footer-column">
-				<p>© {new Date().getFullYear()} Rincon Hentai</p>
-				<p>Las imágenes han sido tomadas de Rule34</p>
-				<p>
-					Para sugerencias, contáctanos en <a
-						href="rinconhentai@proton.me">rinconhentai@proton.me</a
+	</body><footer class="p-12 bg-gray-900/40 backdrop-blur-sm mt-16">
+		<div class="max-w-6xl mx-auto">
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div class="text-center md:text-left">
+					<h2
+						class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 mb-4"
 					>
+						Somos Rincon Hentai, la mejor página al servicio de la
+						amplia comunidad amante del hentai.
+					</h2>
+				</div>
+				<div class="text-center md:text-right">
+					<p class="text-gray-400 mb-2">
+						© {new Date().getFullYear()} RinconHentai
+					</p>
+					<p class="text-gray-300">
+						Para sugerencias, contáctanos en
+						<a
+							href="mailto:rinconhentai@proton.me"
+							class="text-pink-400 hover:text-pink-300 transition-colors duration-300"
+						>
+							rinconhentai@proton.me
+						</a>
+					</p>
+				</div>
+			</div>
+			<div class="border-t border-gray-800 mt-8 pt-8 text-center">
+				<p class="text-sm text-gray-300 mb-2">
+					Las imágenes han sido tomadas de Rule34
+				</p>
+				<p class="text-sm text-gray-400">
+					Al usar este sitio, aceptas nuestros
+					<a
+						href="/terminos-de-uso"
+						class="text-pink-400 hover:text-pink-300 transition-colors duration-300"
+					>
+						términos de uso
+					</a>
 				</p>
 			</div>
 		</div>
