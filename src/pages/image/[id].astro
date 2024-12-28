@@ -27,8 +27,8 @@ const getImageDetails = async (id: string) => {
         const data = await fetchWithRetry(`${API_BASE_URL}?${params}`, {
             headers: {
                 Accept: "application/json",
-                "User-Agent": "RinconHentai/1.0 (https://rinconhentai.com)",
             },
+            Cache: "no-cache",
             priority: "high",
         });
 
@@ -56,8 +56,8 @@ const getRelatedImages = async (tag: string) => {
         const data = await fetchWithRetry(`${API_BASE_URL}?${params}`, {
             headers: {
                 Accept: "application/json",
-                "User-Agent": "RinconHentai/1.0 (https://rinconhentai.com)",
             },
+            Cache: "no-cache",
             priority: "low",
         });
 

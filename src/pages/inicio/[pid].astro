@@ -39,8 +39,8 @@ try {
 	images = await fetchWithRetry(`${API_BASE_URL}?${params}`, {
 		headers: {
 			Accept: "application/json",
-			"User-Agent": "RinconHentai/1.0 (https://rinconhentai.com)",
 		},
+		CacheControl: "max-age=300, stale-while-revalidate=600",
 	});
 
 	// Basic data validation
