@@ -2,6 +2,7 @@
 import Gallery from "../../../components/Gallery.astro";
 import Layout from "../../../layouts/Layout.astro";
 import type { ImageListResponse } from "../../../interfaces/image.response";
+import { fetchWithRetry } from "../../../utils/fetchWithRetry";
 
 export const prerender = false;
 
@@ -29,19 +30,13 @@ const params = new URLSearchParams({
 let images: ImageListResponse[] = [];
 
 try {
-    const response = await fetch(`${API_BASE_URL}?${params}`, {
+    images = await fetchWithRetry(`${API_BASE_URL}?${params}`, {
         headers: {
             Accept: "application/json",
+            "User-Agent": "RinconHentai/1.0 (https://rinconhentai.com)",
         },
-        cache: "no-cache",
         priority: "high",
     });
-
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    images = await response.json();
 
     // Basic data validation
     if (!Array.isArray(images)) {

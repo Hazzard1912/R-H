@@ -5,6 +5,7 @@ import Layout from "../../layouts/Layout.astro";
 import type { ImageData } from "../../interfaces/imageData.response";
 import type { ImageListResponse } from "../../interfaces/image.response";
 import Gallery from "../../components/Gallery.astro";
+import { fetchWithRetry } from "../../utils/fetchWithRetry";
 
 export const prerender = false;
 
@@ -13,7 +14,6 @@ const { id } = Astro.params;
 // API configuration
 const API_BASE_URL = "https://rule34.xxx/index.php";
 
-// Function to fetch image details
 const getImageDetails = async (id: string) => {
     const params = new URLSearchParams({
         page: "dapi",
@@ -24,20 +24,14 @@ const getImageDetails = async (id: string) => {
     });
 
     try {
-        const response = await fetch(`${API_BASE_URL}?${params}`, {
+        const data = await fetchWithRetry(`${API_BASE_URL}?${params}`, {
             headers: {
                 Accept: "application/json",
+                "User-Agent": "RinconHentai/1.0 (https://rinconhentai.com)",
             },
-            cache: "no-store",
             priority: "high",
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log(data);
         return Array.isArray(data) && data.length > 0
             ? (data[0] as ImageData)
             : null;
@@ -59,19 +53,14 @@ const getRelatedImages = async (tag: string) => {
     });
 
     try {
-        const response = await fetch(`${API_BASE_URL}?${params}`, {
+        const data = await fetchWithRetry(`${API_BASE_URL}?${params}`, {
             headers: {
                 Accept: "application/json",
+                "User-Agent": "RinconHentai/1.0 (https://rinconhentai.com)",
             },
-            cache: "no-store",
             priority: "low",
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
         return Array.isArray(data) ? (data as ImageListResponse[]) : [];
     } catch (error) {
         console.error("Failed to fetch related images:", error);
@@ -122,21 +111,38 @@ const tags = image?.tags ? image.tags.split(" ") : [];
                     <div class="relative">
                         <div class="image-wrapper relative backdrop-blur-sm bg-gray-800/30 rounded-xl overflow-hidden border border-gray-700/50 transition-transform duration-300 hover:scale-[1.01]">
                             <div class="animate-pulse bg-gray-700/50 absolute inset-0" />
-                            <Image
-                                id="main-image"
-                                src={image.file_url}
-                                alt={`Imagen de: ${image.tags}`}
-                                fetchpriority="high"
-                                format="webp"
-                                loading="eager"
-                                quality={100}
-                                class="lightbox opacity-0 transition-opacity duration-300 rounded-xl shadow-2xl cursor-pointer will-change-transform mx-auto"
-                                layout="responsive"
-                                width={image.width}
-                                height={image.height}
-                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
-                                onload="this.classList.remove('opacity-0')"
-                            />
+                            {image.file_url.match(/\.(mp4|webm)$/i) ? (
+                                <video
+                                    id="source"
+                                    data-id={image.id}
+                                    controls
+                                    class="w-full rounded-xl shadow-2xl"
+                                    preload="metadata"
+                                >
+                                    <source
+                                        src={image.file_url}
+                                        type={`video/${image.file_url.split(".").pop()}`}
+                                    />
+                                    Your browser does not support the video tag.
+                                </video>
+                            ) : (
+                                <Image
+                                    id="source"
+                                    data-id={image.id}
+                                    src={image.file_url}
+                                    alt=""
+                                    fetchpriority="high"
+                                    format="webp"
+                                    loading="eager"
+                                    quality="high"
+                                    class="lightbox opacity-0 transition-opacity duration-300 rounded-xl shadow-2xl cursor-pointer will-change-transform mx-auto"
+                                    layout="responsive"
+                                    width={image.width}
+                                    height={image.height}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 80vw, 60vw"
+                                    onload="this.classList.remove('opacity-0')"
+                                />
+                            )}
                         </div>
                         <div class="flex justify-center gap-4 mt-4">
                             <button
@@ -246,10 +252,14 @@ const tags = image?.tags ? image.tags.split(" ") : [];
                     .querySelector('meta[property="og:description"]')
                     ?.getAttribute("content") || "";
 
+            const id = document
+                .querySelector("#source")
+                ?.getAttribute("data-id");
+
             const shareData: ShareData = {
                 title,
                 text,
-                url: window.location.href,
+                url: "https://rinconhentai.com/image/" + id,
             };
 
             navigator

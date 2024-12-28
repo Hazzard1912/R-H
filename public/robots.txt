@@ -1,0 +1,23 @@
+User-agent: MJ12bot
+Disallow: /
+
+# Allow all other bots to access everything
+User-agent: *
+Disallow:
+
+# Sitemap location
+Sitemap: https://rinconhentai.com/sitemap.xml
+
+# Prevent access to specific file types for all bots except Googlebot-Image
+User-agent: *
+Disallow: /*.pdf$
+Disallow: /*.doc$
+Disallow: /*.jpg$
+Disallow: /*.png$
+Disallow: /*.gif$
+
+# Allow Googlebot-Image to index images
+User-agent: Googlebot-Image
+Allow: /*.jpg$
+Allow: /*.png$
+Allow: /*.gif$
